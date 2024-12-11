@@ -1,0 +1,21 @@
+pre-commit:
+  parallel: true
+  commands:
+    type-check:
+      glob: '*.{ts,tsx}'
+      run: yarn typecheck
+    eslint:
+      glob: '*.{js,ts,jsx,tsx}'
+      run: yarn lint {staged_files}
+    markdown-link-check:
+      glob: '*.md'
+      run: yarn markdown-link-check {staged_files}
+    test:
+     glob: "*.{js,jsx,ts,tsx}"
+     run: yarn test -b --findRelatedTests {staged_files}
+
+commit-msg:
+  parallel: true
+  commands:
+    lint-commit-msg:
+      run: yarn commitlint --edit "$1"

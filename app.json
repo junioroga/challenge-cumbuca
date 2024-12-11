@@ -1,0 +1,59 @@
+{
+  "expo": {
+    "name": "challenge-cumbuca",
+    "slug": "challenge-cumbuca",
+    "version": "1.0.0",
+    "scheme": "challenge-cumbuca",
+    "newArchEnabled": false,
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "PORTRAIT"
+        }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "tsconfigPaths": true
+    },
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.junioroga.challengecumbuca",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "This app uses Face ID to login."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.junioroga.challengecumbuca"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "878f689f-9bb1-442c-ae03-1672824d1bdd"
+      }
+    }
+  }
+}
