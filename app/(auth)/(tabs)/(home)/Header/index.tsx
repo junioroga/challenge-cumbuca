@@ -1,14 +1,12 @@
 import { Image, Text } from '@/components'
 import useTheme from '@/hooks/useTheme'
-import { View } from 'react-native'
 import Animated, { FadeInUp } from 'react-native-reanimated'
-
-const AnimatedTitle = Animated.createAnimatedComponent(Text)
 export default function Header() {
   const theme = useTheme()
 
   return (
-    <View
+    <Animated.View
+      entering={FadeInUp.delay(50).duration(150).springify()}
       style={{
         flexDirection: 'row',
         alignItems: 'center',
@@ -17,22 +15,17 @@ export default function Header() {
         paddingBottom: 16,
       }}
     >
-      <AnimatedTitle
-        style={{ fontSize: 22 }}
-        fow={8}
-        entering={FadeInUp.delay(50).duration(150).springify()}
-      >
+      <Text style={{ fontSize: 22 }} fow={8}>
         Challenge
-      </AnimatedTitle>
+      </Text>
       <Image
         testID="image-logo"
-        entering={FadeInUp.delay(150).duration(150).springify()}
         source={require('@/assets/logo.png')}
         style={{
-          height: 35,
-          width: 35,
+          height: 30,
+          width: 30,
         }}
       />
-    </View>
+    </Animated.View>
   )
 }

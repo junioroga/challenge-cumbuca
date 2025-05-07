@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { Pressable, StyleSheet } from 'react-native'
 
 import FontAwesome from '@expo/vector-icons/FontAwesome'
-import { LabelPosition } from '@react-navigation/bottom-tabs/lib/typescript/commonjs/src/types'
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -10,6 +9,8 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated'
 import { Text } from '../Text'
+
+type LabelPosition = 'beside-icon' | 'below-icon'
 
 const AnimatedText = Animated.createAnimatedComponent(Text)
 

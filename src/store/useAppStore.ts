@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { User } from '@supabase/supabase-js'
 import { Appearance } from 'react-native'
 import { create } from 'zustand'
 import { StateStorage, createJSONStorage, persist } from 'zustand/middleware'
@@ -25,12 +26,6 @@ export type Product = {
   totalValue: number
 }
 
-export type Login = {
-  document: string
-  password: string
-  lastAccess: Date
-}
-
 export type Theme = 'dark' | 'light'
 
 interface AppState {
@@ -39,15 +34,12 @@ interface AppState {
   addProduct: (product: Product) => void
   removeProduct: (id: number) => void
   editProduct: (product: Product) => void
-  onRegister: (login: Login) => void
-  onLogin: (login: Login) => void
-  login: Login
   setTheme: (theme: Theme) => void
   theme: Theme
   setFaceIdAccess: (permission: boolean) => void
   faceIdAccess: boolean
-  isAuthenticated: boolean
-  setIsAuthenticated: (value: boolean) => void
+  user: User | null
+  setAuthUser: (user: User | null) => void
   productSearch: string
   setProductSearch: (value: string) => void
   isReady: boolean
@@ -72,15 +64,12 @@ export const useAppStore = create<AppState>()(
         }),
       removeProduct: (id: number) =>
         set((state) => ({ products: state.products.filter((item) => item.id !== id) })),
-      onRegister: (login: Login) => set({ login }),
-      onLogin: (login: Login) => set({ login }),
-      login: { document: '', password: '', lastAccess: new Date() },
       setTheme: (theme: Theme) => set({ theme }),
       theme: Appearance.getColorScheme() || 'light',
       setFaceIdAccess: (faceIdAccess: boolean) => set({ faceIdAccess }),
       faceIdAccess: false,
-      isAuthenticated: false,
-      setIsAuthenticated: (isAuthenticated: boolean) => set({ isAuthenticated }),
+      user: null,
+      setAuthUser: (user: User | null) => set({ user }),
       productSearch: '',
       setProductSearch: (productSearch: string) => set({ productSearch }),
       isReady: false,
@@ -90,7 +79,7 @@ export const useAppStore = create<AppState>()(
       partialize: (state) =>
         Object.fromEntries(
           Object.entries(state).filter(
-            ([key]) => !['isAuthenticated', 'productSearch', 'isReady'].includes(key)
+            ([key]) => !['user', 'productSearch', 'isReady'].includes(key)
           )
         ),
       name: 'challenge-cumbuca-storage',

@@ -1,13 +1,12 @@
-import Animated from 'react-native-reanimated'
+import Animated, { FadeInUp } from 'react-native-reanimated'
 
 import { Checkbox, Text } from '@/components'
 import useTheme from '@/hooks/useTheme'
 import { useAppStore } from '@/store'
 import * as LocalAuthentication from 'expo-local-authentication'
 import { useCallback, useEffect, useState } from 'react'
-import { Alert, ScrollView, View } from 'react-native'
-
-const AnimatedTitle = Animated.createAnimatedComponent(Text)
+import { Alert, ScrollView } from 'react-native'
+import Header from './Header'
 
 export default function Settings() {
   const { setFaceIdAccess, setTheme, theme, faceIdAccess } = useAppStore()
@@ -60,10 +59,9 @@ export default function Settings() {
       }}
       showsVerticalScrollIndicator={false}
     >
-      <AnimatedTitle style={{ fontSize: 22, marginBottom: 16 }} fow={8}>
-        Produtos
-      </AnimatedTitle>
+      <Header />
       <Animated.View
+        entering={FadeInUp.delay(150).duration(150).springify()}
         style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
       >
         <Text fow={6}>Ativar Dark mode?</Text>
@@ -73,7 +71,8 @@ export default function Settings() {
           testID="checkbox-theme"
         />
       </Animated.View>
-      <View
+      <Animated.View
+        entering={FadeInUp.delay(150).duration(150).springify()}
         style={{
           height: 1,
           width: '100%',
@@ -84,6 +83,7 @@ export default function Settings() {
       {phoneHasFingerprint && (
         <>
           <Animated.View
+            entering={FadeInUp.delay(250).duration(150).springify()}
             style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
           >
             <Text fow={6}>Entrar com biometria facial?</Text>
@@ -93,7 +93,8 @@ export default function Settings() {
               testID="checkbox-fingerprint"
             />
           </Animated.View>
-          <View
+          <Animated.View
+            entering={FadeInUp.delay(250).duration(150).springify()}
             style={{
               height: 1,
               width: '100%',

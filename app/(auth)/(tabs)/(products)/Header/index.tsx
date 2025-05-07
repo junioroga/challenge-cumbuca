@@ -4,8 +4,6 @@ import { useAppStore } from '@/store'
 import { View } from 'react-native'
 import Animated, { FadeInUp } from 'react-native-reanimated'
 
-const AnimatedTitle = Animated.createAnimatedComponent(Text)
-
 export default function Header() {
   const { setProductSearch, productSearch } = useAppStore()
   const theme = useTheme()
@@ -15,9 +13,9 @@ export default function Header() {
       style={{ backgroundColor: theme.background, padding: 16 }}
       entering={FadeInUp.delay(50).duration(150).springify()}
     >
-      <AnimatedTitle testID="test-title" style={{ fontSize: 22 }} fow={8}>
+      <Text testID="test-title" style={{ fontSize: 22 }} fow={8}>
         Produtos
-      </AnimatedTitle>
+      </Text>
       <View style={{ marginTop: 8 }}>
         <AnimatedInput
           testID="test-product-input"

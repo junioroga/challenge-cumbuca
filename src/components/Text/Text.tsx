@@ -2,6 +2,9 @@ import useTheme from '@/hooks/useTheme'
 import { getFontSize } from '@/utils/responsiveFontSize'
 import { forwardRef } from 'react'
 import { Text as RNText, TextProps as RNTextProps } from 'react-native'
+import Animated, { AnimatedProps } from 'react-native-reanimated'
+
+const AnimatedText = Animated.createAnimatedComponent(RNText)
 
 type TextProps = {
   fow?: number
@@ -10,7 +13,7 @@ type TextProps = {
 
 export const Text = forwardRef(
   (
-    { children, fow = 4, variant = 'primary', style, ...rest }: TextProps,
+    { children, fow = 4, variant = 'primary', style, ...rest }: AnimatedProps<TextProps>,
     ref: React.LegacyRef<RNText>
   ) => {
     let fontSize = getFontSize(14)
@@ -42,9 +45,13 @@ export const Text = forwardRef(
     }
 
     return (
-      <RNText ref={ref} style={[{ fontFamily: fontWeight[fow], fontSize, color }, style]} {...rest}>
+      <AnimatedText
+        ref={ref}
+        style={[{ fontFamily: fontWeight[fow], fontSize, color }, style]}
+        {...rest}
+      >
         {children}
-      </RNText>
+      </AnimatedText>
     )
   }
 )

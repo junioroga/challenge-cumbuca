@@ -1,5 +1,5 @@
 import { AnimatedInput, Button } from '@/components'
-import { Product, useAppStore } from '@/store'
+import { useAppStore } from '@/store'
 import { maskOnlyNumbers } from '@/utils/masks'
 
 import { findMissingId } from '@/utils/utils'
@@ -7,14 +7,13 @@ import { formatCurrency, parseCurrency } from '@brazilian-utils/brazilian-utils'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { impactAsync } from 'expo-haptics'
 import { useCallback, useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import { Alert, Keyboard, View } from 'react-native'
+import { Controller, Resolver, useForm } from 'react-hook-form'
+import { Alert, Keyboard } from 'react-native'
 import Animated, { FadeInUp } from 'react-native-reanimated'
+import { InferType } from 'yup'
 import schema from './schema'
 
-export type FormFields = Omit<Product, 'id' | 'totalValue'> & {
-  totalValue?: number
-}
+export type FormFields = InferType<typeof schema>
 
 const defaultValues = {
   name: '',
@@ -37,7 +36,7 @@ export default function ProductForm() {
     mode: 'all',
     reValidateMode: 'onChange',
     defaultValues,
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema) as Resolver<FormFields>,
   })
 
   const { quantity, unityValue } = watch()
@@ -71,7 +70,7 @@ export default function ProductForm() {
   }
 
   return (
-    <View>
+    <>
       <Controller
         name="name"
         control={control}
@@ -159,6 +158,6 @@ export default function ProductForm() {
           disabled={!isValid}
         />
       </Animated.View>
-    </View>
+    </>
   )
 }

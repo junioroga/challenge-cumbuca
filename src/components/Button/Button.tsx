@@ -1,5 +1,6 @@
 import useTheme from '@/hooks/useTheme'
 import {
+  ActivityIndicator,
   Pressable as RNPressable,
   PressableProps as RNPressableProps,
   StyleProp,
@@ -11,6 +12,7 @@ type ButtonProps = {
   label?: string
   variant?: 'primary' | 'secondary'
   style?: StyleProp<ViewStyle>
+  loading?: boolean
 } & RNPressableProps
 
 export const Button = ({
@@ -18,10 +20,12 @@ export const Button = ({
   variant = 'primary',
   label,
   style,
+  loading = false,
   disabled,
   ...rest
 }: ButtonProps) => {
   const theme = useTheme()
+  const isDisabled = disabled || loading
 
   const color = variant === 'primary' ? theme.primaryPurple80 : theme.primaryOrange80
 
@@ -35,14 +39,16 @@ export const Button = ({
           borderRadius: 5,
           alignItems: 'center',
           justifyContent: 'center',
-          opacity: disabled ? 0.5 : 1,
+          opacity: isDisabled ? 0.5 : 1,
         },
         style,
       ]}
-      disabled={disabled}
+      disabled={isDisabled}
       {...rest}
     >
-      {label ? (
+      {loading ? (
+        <ActivityIndicator color="white" />
+      ) : label ? (
         <Text style={{ color: 'white', fontSize: 16 }} fow={6}>
           {label}
         </Text>

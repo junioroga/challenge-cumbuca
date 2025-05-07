@@ -31,3 +31,5 @@ android
 
 # Tests coverage
 coverage
+
+.env
